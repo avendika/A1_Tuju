@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temu Jurusan - Perbandingan Jurusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(222, 222, 222); /* Consistent with other pages */
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #ff5722; /* Consistent with other pages */
+            color: white; 
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        .sidebar {
+            padding-right: 15px;
+            background-color: white;
+            border-radius: 5px;
+            height: fit-content;
+        }
+
+        .list-group-item {
+            border-radius: 10px !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .list-group-item i {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        /* --- Original Comparison Page Styles (Adapted) --- */
+        .comparison-container { /* Renamed from .container to avoid conflict */
+            background-color: white;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto; /* Centered in main-content area */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .title {
+            color: black;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .comparison-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap; /* Added for responsiveness */
+        }
+        .versus {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #ff5722; /* Consistent with other pages */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .jurusan-box {
+            width: 200px;
+            height: 50px; /* Adjust height for better appearance */
+            font-size: 16px;
+            border-radius: 8px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            text-align: center; /* Center text in dropdown */
+        }
+        .buttons-group { /* Renamed from .buttons to avoid conflict */
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .button {
+            background-color: #ff5722; /* Consistent with other pages */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #e37200; /* Darker orange on hover */
+        }
+        .button.reset {
+            background-color: rgb(255, 0, 0);
+        }
+        .button.reset:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* Styles for comparison results */
+        .comparison-results {
+            margin-top: 30px;
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th {
+            background-color: #ff5722; /* Consistent with other pages */
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            color: #444; /* Darker text for readability */
+        }
+        .category {
+            font-weight: bold;
+            background-color: #f5f5f5;
+            color: #333; /* Darker text for category */
+        }
+        
+        /* Animasi perbandingan dengan Gambar External */
+        .sword-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+        .swords-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sword {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            transition: transform 0.5s ease-in;
+            object-fit: contain; /* Ensure image fits */
+        }
+        .sword-left {
+            left: -20px;
+            transform: translateX(-100px) rotate(-45deg);
+        }
+        .sword-right {
+            right: -20px;
+            transform: translateX(100px) scaleX(-1) rotate(-45deg);
+        }
+        
+        .versus-text-overlay { /* Renamed to avoid conflict with .versus */
+            background-color: #ff5722;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 10px;
+            z-index: 10;
+            position: relative;
+        }
+        .animation-active .sword-left {
+            transform: translateX(100px) rotate(0deg);
+            z-index: 9;
+        }
+        .animation-active .sword-right {
+            transform: translateX(-100px) scaleX(-1) rotate(0deg);
+            z-index: 8;
+        }
+        .loading-text {
+            color: white;
+            font-size: 24px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .comparison-box {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .jurusan-box {
+                width: 90%;
+            }
+            .buttons-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .button {
+                width: 100%;
+            }
+            .comparison-table th, .comparison-table td {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            .versus {
+                margin: 10px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="/">
+                <img src="images/Logo.png" alt="Logo">
+            </a>
+            <h3 class="mb-0">Temu Jurusan</h3>
+        </div>
+        <i class="fas fa-moon" style="float: right;"></i>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <div class="list-group">
+                    <a href="/dasboard.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large"></i>
+                        Dashboard
+                    </a>
+                    <a href="/infoJurusan.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-book"></i>
+                        Jurusan
+                    </a>
+                    <a href="/recent.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i>
+                        Berita Terbaru
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="comparison-container">
+                    <div class="title">Bandingkan Jurusan Teknik, Temukan yang Terbaik!</div>
+                    <div class="subtitle">Temukan jurusan teknik yang tepat dengan perbandingan cerdas untuk menemukan yang paling sesuai dengan minat dan karier impianmu!</div>
+                    
+                    <form id="comparisonForm">
+                        <div class="comparison-box">
+                            <select name="jurusan1" id="jurusan1Select" class="jurusan-box" required>
+                                <option value="">Pilih Jurusan</option>
+                            </select>
+                            <div class="versus">VS</div>
+                            <select name="jurusan2" id="jurusan2Select" class="jurusan-box" required>
+                                <option value="">Pilih Jurusan</option>
+                            </select>
+                        </div>
+                        <div class="buttons-group">
+                            <button type="submit" class="button" id="compareButton">Bandingkan Sekarang</button>
+                            <button type="button" class="button reset" id="resetButton">Reset</button>
+                        </div>
+                    </form>
+                    
+                    <div class="comparison-results" id="comparisonResults">
+                        <h2>Hasil Perbandingan</h2>
+                        <table class="comparison-table" id="comparisonTable">
+                            <thead>
+                                <tr id="tableHeader">
+                                    <th>Aspek</th>
+                                    <th id="jurusan1Header">Jurusan 1</th>
+                                    <th id="jurusan2Header">Jurusan 2</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sword-animation" id="swordAnimation">
+        <div class="swords-container" id="swordsContainer">
+            <img src="/images/sword1.png" class="sword sword-left" alt="Sword Left">
+            <div class="versus-text-overlay">VS</div>
+            <img src="/images/sword1.png" class="sword sword-right" alt="Sword Right">
+        </div>
+        <div class="loading-text">Membandingkan Jurusan...</div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data jurusan (from your PHP example, expanded with more details for PENS if applicable)
+            const availableMajors = [
+                "Teknik Informatika", 
+                "Teknik Elektro", 
+                "Teknik Komputer", // Added from previous discussions
+                "Teknologi Multimedia Broadcasting", // Added
+                "Teknik Telekomunikasi", // Added
+                "Teknik Elektro Industri", // Added
+                "Teknik Mekatronika", // Added
+                "Teknik Pembangkitan Energi", // Added
+                "Teknologi Game", // Added
+                "Teknologi Rekayasa Internet", // Added
+                "Sains Data Terapan" // Added
+            ];
+
+            // Data perbandingan jurusan (more detailed)
+            const comparisonData = {
+                "Teknik Informatika": {
+                    "deskripsi": "Fokus pada pengembangan perangkat lunak, kecerdasan buatan, dan sistem informasi. Lulusannya sangat dicari di era digital.",
+                    "prospek_kerja": "Software Engineer, Data Scientist, Web Developer, Mobile Developer, AI Engineer, System Analyst",
+                    "mata_kuliah": "Pemrograman, Algoritma & Struktur Data, Basis Data, Jaringan Komputer, Rekayasa Perangkat Lunak, Kecerdasan Buatan",
+                    "keahlian": "Coding, Problem Solving, Analytical Thinking, Logika Kuat, Pemikiran Inovatif"
+                },
+                "Teknik Elektro": {
+                    "deskripsi": "Fokus pada sistem tenaga listrik, elektronika, dan telekomunikasi, merancang perangkat dan sistem listrik dari skala mikro hingga besar.",
+                    "prospek_kerja": "Electrical Engineer, Telecommunications Engineer, Control Systems Engineer, Power Systems Engineer, Renewable Energy Engineer",
+                    "mata_kuliah": "Rangkaian Listrik, Elektronika, Sistem Tenaga, Telekomunikasi, Sistem Kontrol, Mesin Listrik",
+                    "keahlian": "Circuit Design, Electronics Troubleshooting, Power Systems Analysis, Pemahaman Fisika & Matematika"
+                },
+                "Teknik Komputer": {
+                    "deskripsi": "Berfokus pada perancangan dan pengembangan sistem komputer, termasuk perangkat keras, arsitektur sistem, jaringan, dan sistem tertanam.",
+                    "prospek_kerja": "Hardware Engineer, Embedded Systems Engineer, IoT Developer, Network Specialist, System Architect",
+                    "mata_kuliah": "Arsitektur Komputer, Sistem Operasi, Jaringan Komputer, Elektronika Digital, Mikroprosesor, Sistem Tertanam",
+                    "keahlian": "Pemahaman Hardware, Logika Kuat, Problem Solving, Detail-Oriented, Keterampilan Merakit"
+                },
+                "Teknologi Multimedia Broadcasting": {
+                    "deskripsi": "Mempelajari produksi, pengeditan, dan penyiaran konten multimedia seperti audio, video, grafis, dan animasi. Ideal untuk industri kreatif digital.",
+                    "prospek_kerja": "Multimedia Producer, Video Editor, Motion Graphics Designer, Broadcast Engineer, Content Creator, Animator, UI/UX Designer",
+                    "mata_kuliah": "Desain Grafis, Animasi Digital, Produksi Video, Audio Engineering, Teknik Broadcasting, Desain Interaktif",
+                    "keahlian": "Kreativitas, Imajinasi Visual, Keterampilan Editing Software, Kemampuan Bercerita, Inovatif"
+                },
+                "Teknik Telekomunikasi": {
+                    "deskripsi": "Fokus pada sistem dan teknologi komunikasi jarak jauh, baik nirkabel maupun kabel, termasuk seluler, serat optik, dan satelit.",
+                    "prospek_kerja": "Telecommunications Engineer, Network Engineer, RF Engineer, Wireless Communications Specialist, Data Communications Analyst",
+                    "mata_kuliah": "Sistem Komunikasi, Jaringan Nirkabel, Antena & Propagasi, Pemrosesan Sinyal Digital, Jaringan Seluler, Sistem Optik",
+                    "keahlian": "Pemahaman Jaringan, Analitis, Problem Solving, Fisika & Matematika, Detail-Oriented"
+                },
+                "Teknik Elektro Industri": {
+                    "deskripsi": "Menerapkan prinsip elektro dalam lingkungan industri, mencakup otomasi, kontrol, instrumentasi, dan sistem daya untuk produksi.",
+                    "prospek_kerja": "Industrial Automation Engineer, PLC Programmer, SCADA Specialist, Control Systems Integrator, Robotics Engineer (Industrial)",
+                    "mata_kuliah": "Kendali Industri, Sistem Otomasi, Mesin Listrik Industri, Instrumentasi Proses, PLC, Robotika Industri",
+                    "keahlian": "Logika Sistem, Troubleshooting, Pemahaman Proses Industri, Keselamatan Kerja, Ketelitian"
+                },
+                "Teknik Mekatronika": {
+                    "deskripsi": "Disiplin interdisipliner yang menggabungkan mekanik, elektronik, komputer, dan kontrol untuk merancang sistem otomatis dan robot cerdas.",
+                    "prospek_kerja": "Mechatronics Engineer, Robotics Engineer, Automation Engineer, Control System Developer, Smart Systems Designer",
+                    "mata_kuliah": "Robotika, Sistem Kontrol, Elektronika Daya, Mekanika Teknik, Pemrograman Mikrokontroler, Aktuator & Sensor",
+                    "keahlian": "Multidisiplin, Problem Solving, Kreativitas, Integrasi Sistem, Inovatif"
+                },
+                "Teknik Pembangkitan Energi": {
+                    "deskripsi": "Mengembangkan, mengelola, dan mengoptimalkan sistem pembangkit energi dari sumber konvensional dan terbarukan.",
+                    "prospek_kerja": "Power Generation Engineer, Renewable Energy Specialist, Energy Systems Analyst, Power Plant Operations Engineer, Energy Efficiency Consultant",
+                    "mata_kuliah": "Termodinamika, Konversi Energi, Pembangkit Tenaga Listrik, Energi Terbarukan, Efisiensi Energi, Manajemen Energi",
+                    "keahlian": "Fisika & Matematika, Analitis, Kesadaran Lingkungan, Inovatif, Problem Solving"
+                },
+                "Teknologi Game": {
+                    "deskripsi": "Spesialisasi dalam pengembangan game secara menyeluruh: pemrograman, desain level, grafis, animasi, dan audio untuk berbagai platform.",
+                    "prospek_kerja": "Game Developer, Game Designer, Game Programmer, Level Designer, Graphics Programmer, QA Tester, VR/AR Developer",
+                    "mata_kuliah": "Game Programming, Game Design Principles, Computer Graphics, AI for Games, Audio for Games, Game Engine Architecture",
+                    "keahlian": "Kreativitas, Pemrograman (C#/C++), Logika, Kerja Tim, Passion terhadap Game, Visualisasi"
+                },
+                "Teknologi Rekayasa Internet": {
+                    "deskripsi": "Fokus pada infrastruktur, protokol, keamanan, dan aplikasi yang mendukung internet dan jaringan komputer, tulang punggung dunia digital.",
+                    "prospek_kerja": "Network Engineer, Cloud Engineer, DevOps Engineer, Cybersecurity Analyst, Web Infrastructure Developer, IT Administrator",
+                    "mata_kuliah": "Jaringan Komputer, Keamanan Siber, Protokol Internet, Cloud Computing, Sistem Terdistribusi, Administrasi Jaringan",
+                    "keahlian": "Pemahaman Jaringan, Analitis, Problem Solving, Cepat Belajar, Detail-Oriented, Keamanan Data"
+                },
+                "Sains Data Terapan": {
+                    "deskripsi": "Mengumpulkan, mengolah, menganalisis, dan menginterpretasi data untuk mendukung pengambilan keputusan berbasis data di berbagai industri.",
+                    "prospek_kerja": "Data Scientist, Data Analyst, Machine Learning Engineer, Business Intelligence Developer, Big Data Specialist, Statistician",
+                    "mata_kuliah": "Statistika & Probabilitas, Machine Learning, Big Data Technologies, Visualisasi Data, Pemrograman (Python/R), Data Mining",
+                    "keahlian": "Matematika & Statistik, Logika, Pemrograman, Analitis, Komunikasi Data, Kreativitas"
+                }
+            };
+
+
+            const jurusan1Select = document.getElementById('jurusan1Select');
+            const jurusan2Select = document.getElementById('jurusan2Select');
+            const comparisonForm = document.getElementById('comparisonForm');
+            const compareButton = document.getElementById('compareButton');
+            const resetButton = document.getElementById('resetButton');
+            const comparisonResults = document.getElementById('comparisonResults');
+            const jurusan1Header = document.getElementById('jurusan1Header');
+            const jurusan2Header = document.getElementById('jurusan2Header');
+            const comparisonTableBody = document.getElementById('comparisonTableBody');
+            const swordAnimation = document.getElementById('swordAnimation');
+            const swordsContainer = document.getElementById('swordsContainer');
+
+            // Function to populate select dropdowns
+            function populateSelects() {
+                availableMajors.forEach(major => {
+                    const option1 = document.createElement('option');
+                    option1.value = major;
+                    option1.textContent = major;
+                    jurusan1Select.appendChild(option1);
+
+                    const option2 = document.createElement('option');
+                    option2.value = major;
+                    option2.textContent = major;
+                    jurusan2Select.appendChild(option2);
+                });
+            }
+
+            // Function to display comparison results
+            function displayResults(major1Name, major2Name) {
+                const major1Data = comparisonData[major1Name];
+                const major2Data = comparisonData[major2Name];
+
+                if (!major1Data || !major2Data) {
+                    alert("Data untuk salah satu atau kedua jurusan tidak ditemukan.");
+                    comparisonResults.style.display = 'none';
+                    return;
+                }
+
+                jurusan1Header.textContent = major1Name;
+                jurusan2Header.textContent = major2Name;
+                comparisonTableBody.innerHTML = ''; // Clear previous results
+
+                const aspects = ["deskripsi", "prospek_kerja", "mata_kuliah", "keahlian"];
+                const aspectLabels = {
+                    "deskripsi": "Deskripsi",
+                    "prospek_kerja": "Prospek Kerja",
+                    "mata_kuliah": "Mata Kuliah Utama",
+                    "keahlian": "Keahlian yang Dipelajari"
+                };
+
+                aspects.forEach(aspect => {
+                    const row = document.createElement('tr');
+                    const categoryCell = document.createElement('td');
+                    categoryCell.className = 'category';
+                    categoryCell.textContent = aspectLabels[aspect];
+                    row.appendChild(categoryCell);
+
+                    const data1Cell = document.createElement('td');
+                    data1Cell.textContent = major1Data[aspect] || '-';
+                    row.appendChild(data1Cell);
+
+                    const data2Cell = document.createElement('td');
+                    data2Cell.textContent = major2Data[aspect] || '-';
+                    row.appendChild(data2Cell);
+
+                    comparisonTableBody.appendChild(row);
+                });
+
+                comparisonResults.style.display = 'block';
+            }
+
+            // Handle form submission
+            comparisonForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                const jurusan1 = jurusan1Select.value;
+                const jurusan2 = jurusan2Select.value;
+
+                if (!jurusan1 || !jurusan2) {
+                    alert("Mohon pilih kedua jurusan untuk dibandingkan!");
+                    return;
+                }
+
+                if (jurusan1 === jurusan2) {
+                    alert("Mohon pilih dua jurusan yang berbeda untuk dibandingkan!");
+                    return;
+                }
+
+                // Show animation
+                swordAnimation.style.display = 'flex';
+                setTimeout(function() {
+                    swordsContainer.classList.add('animation-active');
+                    // After animation, display results and hide animation
+                    setTimeout(function() {
+                        swordAnimation.style.display = 'none';
+                        swordsContainer.classList.remove('animation-active');
+                        displayResults(jurusan1, jurusan2);
+                    }, 1500); // Duration for the animation to complete
+                }, 500); // Delay before starting animation
+            });
+
+            // Handle reset button
+            resetButton.addEventListener('click', function() {
+                jurusan1Select.value = "";
+                jurusan2Select.value = "";
+                comparisonResults.style.display = 'none';
+                // Clear URL parameters if any
+                const url = new URL(window.location.href);
+                url.searchParams.delete('jurusan1');
+                url.searchParams.delete('jurusan2');
+                window.history.replaceState({}, document.title, url.toString());
+            });
+
+            // On page load:
+            populateSelects();
+
+            // Check URL parameters on load to display results if coming from a direct link with params
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialJurusan1 = urlParams.get('jurusan1');
+            const initialJurusan2 = urlParams.get('jurusan2');
+
+            if (initialJurusan1 && initialJurusan2) {
+                jurusan1Select.value = initialJurusan1;
+                jurusan2Select.value = initialJurusan2;
+                displayResults(initialJurusan1, initialJurusan2);
+            }
+        });
+    </script>
+</body>
+</html>
