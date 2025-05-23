@@ -19,6 +19,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added subtle shadow */
         }
 
         .logo {
@@ -39,8 +40,9 @@
         .sidebar {
             padding-right: 15px;
             background-color: white;
-            border-radius: 5px;
+            border-radius: 8px; /* Slightly larger radius */
             height: fit-content;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Added shadow */
         }
 
         .list-group-item {
@@ -67,110 +69,132 @@
             font-size: 1.2em;
         }
 
-        /* --- Original Comparison Page Styles (Adapted) --- */
-        .comparison-container { /* Renamed from .container to avoid conflict */
+        /* --- Comparison Page Styles --- */
+        .comparison-container {
             background-color: white;
             width: 100%;
-            max-width: 800px;
-            margin: 20px auto; /* Centered in main-content area */
+            max-width: 900px; /* Increased max-width for better table space */
+            margin: 20px auto;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
             text-align: center;
         }
         .title {
-            color: black;
-            font-size: 26px;
+            color: #333; /* Darker text for better contrast */
+            font-size: 28px; /* Slightly larger title */
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .subtitle {
-            font-size: 16px;
+            font-size: 18px; /* Slightly larger subtitle */
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* More space below subtitle */
         }
         .comparison-box {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 25px; /* Increased gap */
             margin: 20px 0;
-            flex-wrap: wrap; /* Added for responsiveness */
+            flex-wrap: wrap;
         }
         .versus {
-            font-size: 20px;
+            font-size: 24px; /* Larger "VS" */
             font-weight: bold;
-            background-color: #ff5722; /* Consistent with other pages */
+            background-color: #ff5722;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px; /* Larger padding */
             border-radius: 10px;
             display: flex;
             align-items: center;
             position: relative;
         }
         .jurusan-box {
-            width: 200px;
-            height: 50px; /* Adjust height for better appearance */
-            font-size: 16px;
+            width: 250px; /* Wider dropdowns */
+            height: 50px;
+            font-size: 17px; /* Slightly larger font */
             border-radius: 8px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            text-align: center; /* Center text in dropdown */
+            padding: 0 15px; /* Added horizontal padding */
+            border: 1px solid #ced4da; /* Bootstrap-like border */
+            text-align: left; /* Align text to left in dropdown */
+            appearance: none; /* Remove default dropdown arrow */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
         }
-        .buttons-group { /* Renamed from .buttons to avoid conflict */
+        .buttons-group {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px; /* Increased gap */
+            margin-top: 30px; /* More space above buttons */
             flex-wrap: wrap;
         }
         .button {
-            background-color: #ff5722; /* Consistent with other pages */
+            background-color: #ff5722;
             color: white;
-            padding: 12px 25px;
+            padding: 14px 30px; /* Larger buttons */
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 17px;
+            transition: 0.3s ease; /* Smooth transition */
+            font-weight: bold;
         }
         .button:hover {
-            background-color: #e37200; /* Darker orange on hover */
+            background-color: #e37200;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .button.reset {
-            background-color: rgb(255, 0, 0);
+            background-color: #dc3545; /* Bootstrap danger red */
         }
         .button.reset:hover {
-            background-color: #d32f2f;
+            background-color: #c82333; /* Darker red on hover */
         }
         
         /* Styles for comparison results */
         .comparison-results {
-            margin-top: 30px;
+            margin-top: 40px; /* More space above results */
             text-align: left;
             display: none; /* Hidden by default */
+        }
+        .comparison-results h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
         }
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            border-radius: 8px; /* Rounded corners for table */
+            overflow: hidden; /* Ensures rounded corners apply */
         }
         .comparison-table th {
-            background-color: #ff5722; /* Consistent with other pages */
+            background-color: #ff5722;
             color: white;
-            padding: 12px;
+            padding: 15px; /* More padding */
             text-align: center;
+            font-weight: bold;
         }
         .comparison-table td {
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 15px; /* More padding */
+            border: 1px solid #eee; /* Lighter border */
             vertical-align: top;
-            color: #444; /* Darker text for readability */
+            color: #444;
+            line-height: 1.6; /* Better line spacing */
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; /* Zebra striping */
         }
         .category {
             font-weight: bold;
-            background-color: #f5f5f5;
-            color: #333; /* Darker text for category */
+            background-color: #f0f0f0; /* Lighter background for category */
+            color: #333;
+            width: 25%; /* Give category column more defined width */
         }
         
         /* Animasi perbandingan dengan Gambar External */
@@ -180,12 +204,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             flex-direction: column;
+            opacity: 0; /* Start hidden for fade-in */
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sword-animation.show {
+            opacity: 1;
         }
         .swords-container {
             position: relative;
@@ -197,38 +226,44 @@
         }
         .sword {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            transition: transform 0.5s ease-in;
-            object-fit: contain; /* Ensure image fits */
+            width: 150px; /* Larger swords */
+            height: 150px;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncier animation */
+            object-fit: contain;
         }
         .sword-left {
-            left: -20px;
-            transform: translateX(-100px) rotate(-45deg);
+            left: -50px; /* Start further out */
+            transform: translateX(-150px) rotate(-60deg); /* More dramatic start */
         }
         .sword-right {
-            right: -20px;
-            transform: translateX(100px) scaleX(-1) rotate(-45deg);
+            right: -50px; /* Start further out */
+            transform: translateX(150px) scaleX(-1) rotate(-60deg);
         }
         
-        .versus-text-overlay { /* Renamed to avoid conflict with .versus */
+        .versus-text-overlay {
             background-color: #ff5722;
             color: white;
-            font-size: 24px;
+            font-size: 28px; /* Larger "VS" in animation */
             font-weight: bold;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 10px;
             z-index: 10;
             position: relative;
+            transform: scale(0); /* Start scaled down */
+            transition: transform 0.4s ease-out 0.5s; /* Delay appearance */
         }
         .animation-active .sword-left {
-            transform: translateX(100px) rotate(0deg);
+            transform: translateX(0px) rotate(0deg); /* Move to center */
             z-index: 9;
         }
         .animation-active .sword-right {
-            transform: translateX(-100px) scaleX(-1) rotate(0deg);
+            transform: translateX(0px) scaleX(-1) rotate(0deg); /* Move to center */
             z-index: 8;
         }
+        .animation-active .versus-text-overlay {
+            transform: scale(1); /* Scale up to normal size */
+        }
+
         .loading-text {
             color: white;
             font-size: 24px;
@@ -238,26 +273,72 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .container-fluid {
+                padding: 10px;
+            }
+            .header {
+                padding: 10px;
+            }
+            .logo h3 {
+                font-size: 1.2em;
+            }
+            .sidebar {
+                padding-right: 0;
+            }
+            .comparison-container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+            .title {
+                font-size: 22px;
+            }
+            .subtitle {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
             .comparison-box {
                 flex-direction: column;
                 gap: 15px;
             }
             .jurusan-box {
-                width: 90%;
+                width: 100%;
+                max-width: 280px; /* Limit width on small screens */
+                font-size: 15px;
+            }
+            .versus {
+                font-size: 20px;
+                padding: 8px 18px;
             }
             .buttons-group {
                 flex-direction: column;
                 gap: 10px;
+                margin-top: 20px;
             }
             .button {
                 width: 100%;
+                padding: 12px 25px;
+                font-size: 15px;
+            }
+            .comparison-results h2 {
+                font-size: 20px;
             }
             .comparison-table th, .comparison-table td {
-                font-size: 0.9em;
-                padding: 8px;
+                font-size: 0.85em;
+                padding: 10px;
             }
-            .versus {
-                margin: 10px 0;
+            .category {
+                width: 35%; /* Adjust category width for small screens */
+            }
+            .sword {
+                width: 100px;
+                height: 100px;
+            }
+            .versus-text-overlay {
+                font-size: 22px;
+                padding: 10px 20px;
+            }
+            .loading-text {
+                font-size: 20px;
             }
         }
     </style>
@@ -324,7 +405,7 @@
                                 </tr>
                             </thead>
                             <tbody id="comparisonTableBody">
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -334,9 +415,9 @@
     
     <div class="sword-animation" id="swordAnimation">
         <div class="swords-container" id="swordsContainer">
-            <img src="/images/sword1.png" class="sword sword-left" alt="Sword Left">
+            <img src="images/sword1.png" class="sword sword-left" alt="Sword Left">
             <div class="versus-text-overlay">VS</div>
-            <img src="/images/sword1.png" class="sword sword-right" alt="Sword Right">
+            <img src="images/sword1.png" class="sword sword-right" alt="Sword Right">
         </div>
         <div class="loading-text">Membandingkan Jurusan...</div>
     </div>
@@ -520,15 +601,19 @@
 
                 // Show animation
                 swordAnimation.style.display = 'flex';
+                swordAnimation.classList.add('show'); // Trigger fade-in
                 setTimeout(function() {
                     swordsContainer.classList.add('animation-active');
                     // After animation, display results and hide animation
                     setTimeout(function() {
-                        swordAnimation.style.display = 'none';
-                        swordsContainer.classList.remove('animation-active');
+                        swordAnimation.classList.remove('show'); // Start fade-out
+                        setTimeout(() => {
+                            swordAnimation.style.display = 'none';
+                            swordsContainer.classList.remove('animation-active');
+                        }, 300); // Wait for fade-out to complete before hiding
                         displayResults(jurusan1, jurusan2);
                     }, 1500); // Duration for the animation to complete
-                }, 500); // Delay before starting animation
+                }, 100); // Short delay before starting animation to allow 'show' class to apply
             });
 
             // Handle reset button

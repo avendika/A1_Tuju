@@ -39,7 +39,6 @@
             padding-right: 15px;
             background-color: white;
             border-radius: 5px;
-            height: fit-content; /* Adjust height based on content */
         }
 
         .list-group-item {
@@ -129,6 +128,10 @@
         .major-card-body {
             padding: 20px;
             flex-grow: 1;
+            /* Added for button alignment */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes content and button apart */
         }
 
         .major-card-title {
@@ -142,6 +145,7 @@
             font-size: 0.95em;
             color: #666;
             margin-bottom: 15px;
+            flex-grow: 1; /* Allows text to take up available space */
         }
 
         .major-card-link {
@@ -155,7 +159,7 @@
             transition: background-color 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            align-self: flex-start; /* Align button to start within flex column */
+            align-self: flex-end; /* **CHANGED: Aligns button to the right within flex column** */
         }
 
         .major-card-link:hover {
@@ -207,78 +211,100 @@
                 <div class="major-cards-container" id="majorCardsContainer">
                     <div class="major-card" data-major-name="Teknik Informatika">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Informatika</h5>
-                            <p class="major-card-text">Mempelajari pengembangan software, algoritma, kecerdasan buatan, pemrograman, dan sistem informasi. Lulusan dapat berkarir sebagai developer, data scientist, atau system analyst.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Informatika</h5>
+                                <p class="major-card-text">Mempelajari pengembangan software, algoritma, kecerdasan buatan, pemrograman, dan sistem informasi. Lulusan dapat berkarir sebagai developer, data scientist, atau system analyst.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Informatika" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Komputer">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Komputer</h5>
-                            <p class="major-card-text">Fokus pada perancangan perangkat keras komputer, arsitektur sistem, jaringan, dan embedded system. Prospek kerja meliputi hardware engineer, network specialist dan IoT developer.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Komputer</h5>
+                                <p class="major-card-text">Fokus pada perancangan perangkat keras komputer, arsitektur sistem, jaringan, dan embedded system. Prospek kerja meliputi hardware engineer, network specialist dan IoT developer.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Komputer" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Elektro">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Elektro</h5>
-                            <p class="major-card-text">Mengkaji sistem kelistrikan, elektronika, telekomunikasi, dan kontrol. Lulusan dapat bekerja di bidang pembangkit listrik, otomasi industri, dan pengembangan teknologi.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Elektro</h5>
+                                <p class="major-card-text">Mengkaji sistem kelistrikan, elektronika, telekomunikasi, dan kontrol. Lulusan dapat bekerja di bidang pembangkit listrik, otomasi industri, dan pengembangan teknologi.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Elektro" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknologi Multimedia Broadcasting">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknologi Multimedia Broadcasting</h5>
-                            <p class="major-card-text">Mempelajari desain grafis, animasi, produksi video, dan pengembangan game. Lulusan dapat berkarir sebagai desainer UI/UX, animator, dan game developer.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknologi Multimedia Broadcasting</h5>
+                                <p class="major-card-text">Mempelajari desain grafis, animasi, produksi video, dan pengembangan game. Lulusan dapat berkarir sebagai desainer UI/UX, animator, dan game developer.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknologi_Multimedia_Broadcasting" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Telekomunikasi">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Telekomunikasi</h5>
-                            <p class="major-card-text">Teknik Telekomunikasi adalah disiplin ilmu yang berkaitan dengan transfer data dengan jaringan jaringan kabel maupun nirkabel.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Telekomunikasi</h5>
+                                <p class="major-card-text">Teknik Telekomunikasi adalah disiplin ilmu yang berkaitan dengan transfer data dengan jaringan jaringan kabel maupun nirkabel.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Telekomunikasi" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Elektro Industri">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Elektro Industri</h5>
-                            <p class="major-card-text">Jurusan Elektronika Industri adalah bidang teknik yang mempelajari tentang komponen listrik dan juga berbagai macam semikonduktor.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Elektro Industri</h5>
+                                <p class="major-card-text">Jurusan Elektronika Industri adalah bidang teknik yang mempelajari tentang komponen listrik dan juga berbagai macam semikonduktor.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Elektro_Industri" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Mekatronika">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Mekatronika</h5>
-                            <p class="major-card-text">Mempelajari gabungan teknik mesin, elektronika, dan informatika untuk merancang, membuat, dan mengoperasikan sistem otomatis.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Mekatronika</h5>
+                                <p class="major-card-text">Mempelajari gabungan teknik mesin, elektronika, dan informatika untuk merancang, membuat, dan mengoperasikan sistem otomatis.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Mekatronika" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknik Pembangkitan Energi">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknik Pembangkitan Energi</h5>
-                            <p class="major-card-text">Fokus pada teknologi produksi energi dari berbagai sumber, termasuk terbarukan. Lulusan dapat bekerja di pembangkit listrik atau industri energi.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknik Pembangkitan Energi</h5>
+                                <p class="major-card-text">Fokus pada teknologi produksi energi dari berbagai sumber, termasuk terbarukan. Lulusan dapat bekerja di pembangkit listrik atau industri energi.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknik_Pembangkitan_Energi" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknologi Game">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknologi Game</h5>
-                            <p class="major-card-text">Mempelajari desain, pengembangan, dan produksi game. Lulusan dapat berkarir sebagai game developer, game designer, atau animator game.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknologi Game</h5>
+                                <p class="major-card-text">Mempelajari desain, pengembangan, dan produksi game. Lulusan dapat berkarir sebagai game developer, game designer, atau animator game.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknologi_Game" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Teknologi Rekayasa Internet">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Teknologi Rekayasa Internet</h5>
-                            <p class="major-card-text">Fokus pada pengembangan dan pengelolaan infrastruktur jaringan internet, termasuk keamanan siber dan aplikasi berbasis web.</p>
+                            <div>
+                                <h5 class="major-card-title">Teknologi Rekayasa Internet</h5>
+                                <p class="major-card-text">Fokus pada pengembangan dan pengelolaan infrastruktur jaringan internet, termasuk keamanan siber dan aplikasi berbasis web.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Teknologi_Rekayasa_Internet" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>
                     <div class="major-card" data-major-name="Sains Data Terapan">
                         <div class="major-card-body">
-                            <h5 class="major-card-title">Sains Data Terapan</h5>
-                            <p class="major-card-text">Mempelajari analisis data, machine learning, dan statistik untuk mengambil keputusan berbasis data di berbagai industri.</p>
+                            <div>
+                                <h5 class="major-card-title">Sains Data Terapan</h5>
+                                <p class="major-card-text">Mempelajari analisis data, machine learning, dan statistik untuk mengambil keputusan berbasis data di berbagai industri.</p>
+                            </div>
                             <a href="jurusan-detail.html?major=Sains_Data_Terapan" class="major-card-link">Lihat Detail</a>
                         </div>
                     </div>

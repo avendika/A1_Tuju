@@ -371,9 +371,7 @@
                 
                 <div class="features">
                     <h4>Fitur Lainnya</h4>
-                    <div class="row">
-                        <div class="col">
-                            <div class="feature-item">
+                    <div class="row justify-content-start"> <div class="col-6 col-md-4 col-lg-3"> <div class="feature-item">
                                 <a href="quiz.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-brain"></i>
@@ -382,8 +380,7 @@
                                 <p>Smart Major</p>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="feature-item">
+                        <div class="col-6 col-md-4 col-lg-3"> <div class="feature-item">
                                 <a href="perbandingan.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-bolt"></i>
@@ -392,7 +389,7 @@
                                 <p>VS Major</p>
                             </div>
                         </div>
-                    </div>
+                        </div>
                 </div>
 
                 <div class="majors">
@@ -516,7 +513,7 @@
                 } else {
                     // Initial dummy data if localStorage is empty
                     const initialNews = [
-                        { id: generateId(), title: "PENS Raih Juara Umum Kompetisi Informatika Nasional Enam Kali Berturut-turut", description: "Politeknik Elektronika Negeri Surabaya (PENS) kembali menorehkan prestasi gemilang dengan meraih juara umum kompetisi Informatika Nasional untuk keenam kalinya secara berturut-turut.", image: "https://via.placeholder.com/600x300?text=PENS+Juara", link: "#" },
+                        { id: generateId(), title: "PENS Raih Juara Umum Kompetisi Informatika Nasional Enam Kali Berturut-turut", description: "Politeknik Elektronika Negeri Surabaya (PENS) kembali menorehkan prestasi gemilang dengan meraih juara umum kompetisi Informatika Nasional untuk keenam kalinya secara berturut-turut.", image: "https://lintasjatimnews.com/wp-content/uploads/2024/07/IMG_20240705_051241-685x412.jpg?v=1720131224", link: "https://lintasjatimnews.com/2024/07/05/pens-raih-juara-umum-kompetisi-informatika-nasional-6-kali-berturut-turut/" },
                         { id: generateId(), title: "PENS Siap Dukung Literasi Digital di Kalangan Mahasiswa Surabaya", description: "Direktorat Jenderal Vokasi bersama Politeknik Elektronika Negeri Surabaya (PENS) mendukung penuh peningkatan literasi digital di kalangan mahasiswa Surabaya. Berbagai aktivitas dan informasi di dunia digital semakin meningkat.", image: "https://via.placeholder.com/600x300?text=PENS+Literasi", link: "#" },
                         { id: generateId(), title: "Mahasiswa Singapura Belajar Teknologi dan Budaya di PENS Surabaya", description: "Delegasi mahasiswa dari Singapura berkunjung ke Politeknik Elektronika Negeri Surabaya (PENS) untuk mempelajari teknologi terbaru dan mengenal lebih dekat kebudayaan Indonesia.", image: "https://via.placeholder.com/600x300?text=PENS+Singapura", link: "#" },
                         { id: generateId(), title: "Dari Ajang InnoWorks 2023, Inovasi Mahasiswa PENS Siap Wakili Indonesia ke Tingkat ASEAN", description: "Dalam ajang InnoWorks 2023, Politeknik Elektronika Negeri Surabaya (PENS) kembali menunjukkan taringnya. Inovasi-inovasi yang dihasilkan mahasiswa PENS berhasil lolos dan siap mewakili Indonesia ke tingkat ASEAN.", image: "https://via.placeholder.com/600x300?text=PENS+Inovasi", link: "#" }
@@ -618,8 +615,8 @@
                     nextBtn.style.visibility = currentSlide >= totalSlides - 1 ? 'hidden' : 'visible';
 
                     if (cards.length <= cardsPerSlide) { 
-                         prevBtn.style.visibility = 'hidden';
-                         nextBtn.style.visibility = 'hidden';
+                            prevBtn.style.visibility = 'hidden';
+                            nextBtn.style.visibility = 'hidden';
                     }
                 }
                 
