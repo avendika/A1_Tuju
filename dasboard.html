@@ -325,6 +325,57 @@
             background-color: #ff5722;
             color: white;
         }
+
+        /* --- Custom adjustments for tighter spacing --- */
+
+        /* Features Section */
+        .features .row {
+            /* Reduce internal gutter (g-0 or g-1 makes it very tight) */
+            --bs-gutter-x: 0.5rem; /* ~8px horizontal gutter */
+            --bs-gutter-y: 1rem; /* Default vertical gutter for stacked items */
+            justify-content: flex-start; /* Align items to the start (left) */
+            margin-left: -0.25rem; /* Compensate for small gutter on left */
+            margin-right: -0.25rem; /* Compensate for small gutter on right */
+        }
+
+        .features .col-auto {
+            padding-left: 0.25rem; /* Half of --bs-gutter-x */
+            padding-right: 0.25rem; /* Half of --bs-gutter-x */
+        }
+
+        .feature-item {
+            width: 100px; /* Set a fixed width or max-width for uniformity and compactness */
+            margin-left: auto; /* Center if col is wider than content */
+            margin-right: auto; /* Center if col is wider than content */
+        }
+
+        /* Majors Section */
+        .majors .row {
+            --bs-gutter-x: 0.5rem; /* Reduce horizontal gutter */
+            --bs-gutter-y: 1rem; /* Can also reduce this if needed */
+            margin-left: -0.25rem;
+            margin-right: -0.25rem;
+        }
+
+        .majors .col {
+            padding-left: 0.25rem; /* Half of --bs-gutter-x */
+            padding-right: 0.25rem; /* Half of --bs-gutter-x */
+        }
+
+        /* Responsive adjustments for Majors for more columns */
+        @media (min-width: 768px) {
+            .majors .row-cols-md-3 > * {
+                flex: 0 0 auto;
+                width: 20%; /* Change from 3 to 5 columns per row */
+            }
+        }
+
+        @media (min-width: 992px) {
+            .majors .row-cols-lg-6 > * { /* New class for 6 columns on large screens */
+                flex: 0 0 auto;
+                width: 16.66666667%; /* 100% / 6 columns */
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -344,15 +395,15 @@
         <div class="row">
             <div class="col-md-2 sidebar">
                 <div class="list-group">
-                    <a href="/dasboard.html" class="list-group-item list-group-item-action active">
+                    <a href="dasboard.html" class="list-group-item list-group-item-action active">
                         <i class="fas fa-th-large"></i>
                         Dashboard
                     </a>
-                    <a href="/infoJurusan.html" class="list-group-item list-group-item-action">
+                    <a href="infoJurusan.html" class="list-group-item list-group-item-action">
                         <i class="fas fa-book"></i>
                         Jurusan
                     </a>
-                    <a href="/recent.html" class="list-group-item list-group-item-action">
+                    <a href="recent.html" class="list-group-item list-group-item-action">
                         <i class="fas fa-history"></i>
                         Berita Terbaru
                     </a>
@@ -371,7 +422,7 @@
                 
                 <div class="features">
                     <h4>Fitur Lainnya</h4>
-                    <div class="row justify-content-start"> <div class="col-6 col-md-4 col-lg-3"> <div class="feature-item">
+                    <div class="row justify-content-start gx-2 gy-3"> <div class="col-auto"> <div class="feature-item">
                                 <a href="quiz.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-brain"></i>
@@ -380,7 +431,7 @@
                                 <p>Smart Major</p>
                             </div>
                         </div>
-                        <div class="col-6 col-md-4 col-lg-3"> <div class="feature-item">
+                        <div class="col-auto"> <div class="feature-item">
                                 <a href="perbandingan.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-bolt"></i>
@@ -389,14 +440,14 @@
                                 <p>VS Major</p>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
 
                 <div class="majors">
                     <h4>
                         Jurusan Kuliah
                     </h4>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 row-cols-lg-6 gx-2 gy-3"> 
                         <div class="col">
                             <a href="jurusan-detail.html?major=Teknik_Elektro" class="major-link">
                                 <div class="major-item">
