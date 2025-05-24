@@ -113,21 +113,19 @@
         .slider-wrapper {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            /* Ensure enough width for slider cards to be side-by-side */
             width: fit-content; 
         }
 
         .slider-card {
-            flex-shrink: 0; /* Prevent cards from shrinking */
-            width: calc(33.333% - 16px); /* Default width for desktop */
+            flex-shrink: 0;
+            width: calc(33.333% - 16px); 
             margin-right: 16px;
             border-radius: 0;
             margin-bottom: 0;
             box-shadow: none;
-            box-sizing: border-box; /* Include padding/border in width */
-            background-color: white; /* Ensure background color */
+            box-sizing: border-box;
+            background-color: white;
         }
-        /* Last card in the slider-wrapper should not have margin-right */
         .slider-wrapper .slider-card:last-child {
             margin-right: 0;
         }
@@ -173,7 +171,6 @@
             color: white;
         }
 
-        /* Responsive Slider Adjustments */
         @media (max-width: 992px) {
             .slider-card {
                 width: calc(50% - 16px);
@@ -185,7 +182,6 @@
                 width: calc(100% - 16px);
             }
         }
-        /* End of Improved Slider Styles */
 
         .features, .majors {
             margin: 30px 0;
@@ -325,57 +321,6 @@
             background-color: #ff5722;
             color: white;
         }
-
-        /* --- Custom adjustments for tighter spacing --- */
-
-        /* Features Section */
-        .features .row {
-            /* Reduce internal gutter (g-0 or g-1 makes it very tight) */
-            --bs-gutter-x: 0.5rem; /* ~8px horizontal gutter */
-            --bs-gutter-y: 1rem; /* Default vertical gutter for stacked items */
-            justify-content: flex-start; /* Align items to the start (left) */
-            margin-left: -0.25rem; /* Compensate for small gutter on left */
-            margin-right: -0.25rem; /* Compensate for small gutter on right */
-        }
-
-        .features .col-auto {
-            padding-left: 0.25rem; /* Half of --bs-gutter-x */
-            padding-right: 0.25rem; /* Half of --bs-gutter-x */
-        }
-
-        .feature-item {
-            width: 100px; /* Set a fixed width or max-width for uniformity and compactness */
-            margin-left: auto; /* Center if col is wider than content */
-            margin-right: auto; /* Center if col is wider than content */
-        }
-
-        /* Majors Section */
-        .majors .row {
-            --bs-gutter-x: 0.5rem; /* Reduce horizontal gutter */
-            --bs-gutter-y: 1rem; /* Can also reduce this if needed */
-            margin-left: -0.25rem;
-            margin-right: -0.25rem;
-        }
-
-        .majors .col {
-            padding-left: 0.25rem; /* Half of --bs-gutter-x */
-            padding-right: 0.25rem; /* Half of --bs-gutter-x */
-        }
-
-        /* Responsive adjustments for Majors for more columns */
-        @media (min-width: 768px) {
-            .majors .row-cols-md-3 > * {
-                flex: 0 0 auto;
-                width: 20%; /* Change from 3 to 5 columns per row */
-            }
-        }
-
-        @media (min-width: 992px) {
-            .majors .row-cols-lg-6 > * { /* New class for 6 columns on large screens */
-                flex: 0 0 auto;
-                width: 16.66666667%; /* 100% / 6 columns */
-            }
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -422,7 +367,9 @@
                 
                 <div class="features">
                     <h4>Fitur Lainnya</h4>
-                    <div class="row justify-content-start gx-2 gy-3"> <div class="col-auto"> <div class="feature-item">
+                    <div class="row">
+                        <div class="col">
+                            <div class="feature-item">
                                 <a href="quiz.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-brain"></i>
@@ -431,7 +378,8 @@
                                 <p>Smart Major</p>
                             </div>
                         </div>
-                        <div class="col-auto"> <div class="feature-item">
+                        <div class="col">
+                            <div class="feature-item">
                                 <a href="perbandingan.html" style="text-decoration: none;">
                                     <div class="feature-icon">
                                         <i class="fas fa-bolt"></i>
@@ -447,7 +395,7 @@
                     <h4>
                         Jurusan Kuliah
                     </h4>
-                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 row-cols-lg-6 gx-2 gy-3"> 
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                         <div class="col">
                             <a href="jurusan-detail.html?major=Teknik_Elektro" class="major-link">
                                 <div class="major-item">
@@ -551,35 +499,34 @@
             const nextBtn = document.getElementById('nextBtn');
             let cards = []; // Will be populated after news is loaded
 
-            // Function to generate a unique ID (if needed for local storage)
-            function generateId() {
-                return '_' + Math.random().toString(36).substr(2, 9);
-            }
-
-            // Function to load news from localStorage
-            function loadNewsFromLocalStorage() {
-                const storedNews = localStorage.getItem('recentNews');
-                if (storedNews) {
-                    return JSON.parse(storedNews);
-                } else {
-                    // Initial dummy data if localStorage is empty
+            // Function to load news from news.json
+            async function loadNewsFromJson() {
+                try {
+                    const response = await fetch('news.json'); // Fetch the JSON file
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const newsData = await response.json();
+                    return newsData;
+                } catch (error) {
+                    console.error('Error fetching news.json:', error);
+                    // Fallback to initial dummy data if JSON fetch fails
                     const initialNews = [
-                        { id: generateId(), title: "PENS Raih Juara Umum Kompetisi Informatika Nasional Enam Kali Berturut-turut", description: "Politeknik Elektronika Negeri Surabaya (PENS) kembali menorehkan prestasi gemilang dengan meraih juara umum kompetisi Informatika Nasional untuk keenam kalinya secara berturut-turut.", image: "https://lintasjatimnews.com/wp-content/uploads/2024/07/IMG_20240705_051241-685x412.jpg?v=1720131224", link: "https://lintasjatimnews.com/2024/07/05/pens-raih-juara-umum-kompetisi-informatika-nasional-6-kali-berturut-turut/" },
-                        { id: generateId(), title: "PENS Siap Dukung Literasi Digital di Kalangan Mahasiswa Surabaya", description: "Direktorat Jenderal Vokasi bersama Politeknik Elektronika Negeri Surabaya (PENS) mendukung penuh peningkatan literasi digital di kalangan mahasiswa Surabaya. Berbagai aktivitas dan informasi di dunia digital semakin meningkat.", image: "https://via.placeholder.com/600x300?text=PENS+Literasi", link: "#" },
-                        { id: generateId(), title: "Mahasiswa Singapura Belajar Teknologi dan Budaya di PENS Surabaya", description: "Delegasi mahasiswa dari Singapura berkunjung ke Politeknik Elektronika Negeri Surabaya (PENS) untuk mempelajari teknologi terbaru dan mengenal lebih dekat kebudayaan Indonesia.", image: "https://via.placeholder.com/600x300?text=PENS+Singapura", link: "#" },
-                        { id: generateId(), title: "Dari Ajang InnoWorks 2023, Inovasi Mahasiswa PENS Siap Wakili Indonesia ke Tingkat ASEAN", description: "Dalam ajang InnoWorks 2023, Politeknik Elektronika Negeri Surabaya (PENS) kembali menunjukkan taringnya. Inovasi-inovasi yang dihasilkan mahasiswa PENS berhasil lolos dan siap mewakili Indonesia ke tingkat ASEAN.", image: "https://via.placeholder.com/600x300?text=PENS+Inovasi", link: "#" }
+                        { id: 'static1', title: "PENS Raih Juara Umum Kompetisi Informatika Nasional", description: "Berita ini adalah contoh fallback karena gagal memuat data dari news.json.", image: "https://via.placeholder.com/600x300?text=Fallback+News", link: "#" },
+                        { id: 'static2', title: "Contoh Berita Statis Lainnya", description: "Ini adalah berita kedua dari data statis.", image: "https://via.placeholder.com/600x300?text=Static+Content", link: "#" }
                     ];
-                    localStorage.setItem('recentNews', JSON.stringify(initialNews));
                     return initialNews;
                 }
             }
-
 
             // Function to populate slider with news data
             function populateSlider(newsData) {
                 sliderWrapper.innerHTML = ''; // Clear loading message/previous content
                 if (newsData.length === 0) {
                     sliderWrapper.innerHTML = '<p style="text-align: center; width: 100%; margin-top: 50px;">Tidak ada berita terbaru saat ini.</p>';
+                    // Hide controls if no news or only a few that fit
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
                     return;
                 }
 
@@ -588,12 +535,12 @@
                     sliderCard.className = 'card slider-card';
 
                     const img = document.createElement('img');
-                    img.src = news.image || 'https://via.placeholder.com/400x200?text=No+Image'; // Fallback image
+                    img.src = news.image || 'https://via.placeholder.com/400x200?text=No+Image';
                     img.alt = news.title || 'News Image';
                     img.style.width = '100%';
                     img.style.height = '200px';
                     img.style.objectFit = 'cover';
-                    img.className = 'mb-3'; // Add margin-bottom
+                    img.className = 'mb-3';
 
                     const cardBody = document.createElement('div');
                     cardBody.className = 'card-body';
@@ -604,10 +551,10 @@
                     cardTitle.textContent = fullTitle.length > 80 ? fullTitle.substring(0, 77) + '...' : fullTitle;
 
                     const readMoreLink = document.createElement('a');
-                    readMoreLink.href = news.link || '#'; // Link to specific news or #
+                    readMoreLink.href = news.link || '#';
                     readMoreLink.textContent = 'Lihat Detail';
                     readMoreLink.className = 'btn btn-sm btn-outline-primary mt-2';
-                    readMoreLink.style.backgroundColor = '#ff5722'; // Consistent with theme
+                    readMoreLink.style.backgroundColor = '#ff5722';
                     readMoreLink.style.borderColor = '#ff5722';
                     readMoreLink.style.color = 'white';
                     readMoreLink.onmouseover = function() { this.style.backgroundColor = '#e37200'; };
@@ -621,12 +568,11 @@
                     sliderWrapper.appendChild(sliderCard);
                 });
 
-                // Update the cards NodeList after new content is added
-                cards = sliderWrapper.querySelectorAll('.slider-card');
-                initializeSlider(); // Now re-initialize the slider
+                cards = sliderWrapper.querySelectorAll('.slider-card'); // Update cards NodeList
+                initializeSlider(); // Initialize the slider after content is loaded
             }
 
-            // Slider Initialization Function
+            // Slider Initialization Function (same as before)
             function initializeSlider() {
                 if(!sliderWrapper || cards.length === 0) {
                     prevBtn.style.display = 'none';
@@ -634,7 +580,7 @@
                     return;
                 }
                 
-                let currentSlide = 0; // Reset slide position when re-initializing
+                let currentSlide = 0;
 
                 function getCardsPerSlide() {
                     if(window.innerWidth < 768) { return 1; } 
@@ -646,7 +592,6 @@
                     const cardsPerSlide = getCardsPerSlide();
                     const totalSlides = Math.ceil(cards.length / cardsPerSlide);
                     
-                    // Clamp currentSlide to valid range
                     if(currentSlide >= totalSlides) { currentSlide = totalSlides - 1; }
                     if(currentSlide < 0) { currentSlide = 0; }
 
@@ -655,7 +600,7 @@
                     const calculatedCardWidth = (containerWidth / cardsPerSlide) - (cardMargin * (cardsPerSlide - 1) / cardsPerSlide);
                     
                     cards.forEach(card => {
-                        card.style.flexBasis = `${calculatedCardWidth}px`; // Use flex-basis for width
+                        card.style.flexBasis = `${calculatedCardWidth}px`;
                         card.style.maxWidth = `${calculatedCardWidth}px`;
                     });
                     
@@ -666,8 +611,8 @@
                     nextBtn.style.visibility = currentSlide >= totalSlides - 1 ? 'hidden' : 'visible';
 
                     if (cards.length <= cardsPerSlide) { 
-                            prevBtn.style.visibility = 'hidden';
-                            nextBtn.style.visibility = 'hidden';
+                         prevBtn.style.visibility = 'hidden';
+                         nextBtn.style.visibility = 'hidden';
                     }
                 }
                 
@@ -687,15 +632,12 @@
                     }
                 }
                 
-                // Remove old listeners if they exist to prevent duplicates
                 prevBtn.removeEventListener('click', prevSlide);
                 nextBtn.removeEventListener('click', nextSlide);
                 
-                // Add new listeners
                 prevBtn.addEventListener('click', prevSlide);
                 nextBtn.addEventListener('click', nextSlide);
                 
-                // Clear any existing interval before setting a new one
                 if (sliderWrapper.dataset.autoSlideInterval) {
                     clearInterval(parseInt(sliderWrapper.dataset.autoSlideInterval));
                 }
@@ -731,14 +673,15 @@
                     });
                 });
                 
-                updateSliderPosition(); // Initial setup
-                window.removeEventListener('resize', updateSliderPosition); // Prevent duplicate listeners
-                window.addEventListener('resize', updateSliderPosition); // Adjust slider when window is resized
+                updateSliderPosition();
+                window.removeEventListener('resize', updateSliderPosition);
+                window.addEventListener('resize', updateSliderPosition);
             }
 
-            // Load news data and populate slider when DOM is ready
-            const newsData = loadNewsFromLocalStorage();
-            populateSlider(newsData);
+            // Load news data from JSON and then populate slider
+            loadNewsFromJson().then(newsData => {
+                populateSlider(newsData);
+            });
         });
     </script>
 </body>

@@ -3,51 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temu Jurusan - Berita Terkini</title>
+    <title>Berita Terkini Jurusan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
         body {
-            background-color: rgb(222, 222, 222); /* Matched background from infoJurusan.html */
+            background-color: #e9ecef;
             font-family: Arial, sans-serif;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
         
-        /* Header styling (copied and slightly adjusted from infoJurusan.html) */
-        .header {
-            background-color: #ff5722;
-            color: white; 
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        /* Container fluid for overall layout */
-        .container-fluid {
-            padding: 20px;
-        }
-
+        /* Sidebar styling */
         .sidebar {
-            padding-right: 15px;
-            background-color: white;
-            border-radius: 5px;
+            background-color: #fff;
+            height: 100vh;
+            width: 30vh;
+            transition: all 0.3s ease;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
+        
+        .sidebar.collapsed {
+            transform: translateX(-180px);
+        }
+        
         .list-group-item {
             border-radius: 10px !important;
-            margin-top: 10px;
             margin-bottom: 10px;
             border: none;
             background-color: #e9ecef;
@@ -56,13 +42,11 @@
             padding: 12px 15px;
             transition: all 0.3s ease;
         }
-
         
         .list-group-item:hover {
             background-color: #ff5722;
             color: white;
             transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3); /* Added shadow on hover */
         }
         
         .list-group-item i {
@@ -70,30 +54,87 @@
             font-size: 1.2em;
         }
         
-        /* Main content area */
-        .main-content {
-            padding-left: 15px; /* Added for spacing from sidebar */
+        /* Keeping the original toggle button positioning */
+        .toggle-btn {
+            position: fixed;
+            left: 178px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 40px;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 101;
+            transition: all 0.3s ease;
         }
         
-        /* Local Header section inside main-content */
-        .main-content .header-local { /* Renamed to avoid conflict with global .header */
-            background-color: #ff5722; /* Matched global header color */
+        .sidebar.collapsed + .toggle-btn {
+            left: 0;
+        }
+        
+        /* Main content area */
+        .main-content {
+            transition: all 0.3s ease;
+            margin-left: 250px;
+            padding: 0 15px;
+            width: calc(100% - 250px);
+        }
+        
+        .main-content.expanded {
+            margin-left: 70px;
+            width: calc(100% - 70px);
+        }
+        
+        /* Original Header section */
+        .header {
+            background-color: #FF7F24;
             padding: 20px;
             border-radius: 5px;
             color: white;
             text-align: center;
             margin-bottom: 20px;
-            /* margin-top: 20px; Removied as container-fluid handles top margin */
+            margin-top: 20px;
         }
         
-        .main-content .header-local h1 {
+        .header h1 {
             font-size: 24px;
             margin-bottom: 5px;
         }
         
-        .main-content .header-local p {
+        .header p {
             font-size: 14px;
             margin-bottom: 0;
+        }
+        
+        /* Search bar (commented out in original, so keeping its styles but not rendering it) */
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .search-input {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            width: 100%;
+        }
+        
+        .search-button {
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
         }
         
         /* Content container for news items */
@@ -104,6 +145,18 @@
             overflow: hidden;
             margin-bottom: 20px;
             padding: 20px;
+        }
+        
+        /* Featured banner (Not present in image but was in the original dashboard code) */
+        .featured-banner {
+            width: 100%;
+            position: relative;
+        }
+        
+        .featured-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
         /* News item styling */
@@ -152,6 +205,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            float: right;
         }
         
         .detail-btn:hover {
@@ -167,9 +221,44 @@
             clear: both;
         }
 
-        /* Responsive Media Queries (simplified due to fixed sidebar) */
+        /* Responsive Media Queries */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+            }
+            .main-content {
+                margin-left: 220px;
+                width: calc(100% - 220px);
+            }
+            .main-content.expanded {
+                margin-left: 40px;
+                width: calc(100% - 40px);
+            }
+            .toggle-btn {
+                left: 218px;
+            }
+            .sidebar.collapsed + .toggle-btn {
+                left: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .main-content .header-local h1 {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+                padding: 0 10px;
+            }
+            .main-content.expanded {
+                margin-left: 20px;
+                width: calc(100% - 20px);
+            }
+            .toggle-btn {
+                left: 198px;
+            }
+             .header h1 {
                 font-size: 20px;
             }
             .news-item-title {
@@ -182,18 +271,21 @@
         
         @media (max-width: 576px) {
             .sidebar {
-                padding-right: 0;
-                margin-bottom: 20px;
+                width: 100%;
+                height: auto;
+                position: relative;
+                transform: translateX(0) !important;
+                box-shadow: none;
                 padding-bottom: 10px;
             }
             .sidebar .list-group {
-                flex-direction: row; /* Horizontal list items */
+                flex-direction: row;
                 justify-content: space-around;
                 flex-wrap: wrap;
                 padding: 0 10px;
             }
             .sidebar .list-group-item {
-                flex: 1 1 auto; /* Allow items to grow/shrink */
+                flex: 1 1 auto;
                 text-align: center;
                 padding: 8px 10px;
                 font-size: 0.85em;
@@ -203,13 +295,23 @@
                 margin-right: 5px;
                 font-size: 1em;
             }
-            .main-content {
-                padding-left: 0;
+
+            .toggle-btn {
+                display: none;
             }
-            .main-content .header-local {
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 0 15px;
+            }
+            .main-content.expanded {
+                margin-left: 0;
+                width: 100%;
+            }
+            .header {
                 padding: 15px 10px;
             }
-            .main-content .header-local h1 {
+            .header h1 {
                 font-size: 18px;
             }
             .news-item-image {
@@ -222,102 +324,126 @@
                 font-size: 0.9rem;
             }
             .detail-btn {
-                width: 100%; /* Full width button on small screens */
+                width: 100%;
                 text-align: center;
                 float: none;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="header">
-        <div class="logo">
-            <a href="index.html">
-                <img src="images/Logo.png" alt="Logo"> </a>
-            <h3 class="mb-0">Temu Jurusan</h3>
+    <div class="sidebar" id="sidebar">
+        <div class="list-group mx-2">
+            <a href="dasboard.html" class="list-group-item list-group-item-action">
+                <i class="fas fa-th-large"></i>
+                Dashboard
+            </a>
+            <a href="infoJurusan.html" class="list-group-item list-group-item-action">
+                <i class="fas fa-book"></i>
+                Jurusan
+            </a>
+            <a href="recent.html" class="list-group-item list-group-item-action active" style="background-color: #ff5722; color: white;">
+                <i class="fas fa-history"></i>
+                Berita Terbaru
+            </a>
         </div>
-        <i class="fas fa-moon" style="float: right;"></i> </div>
+    </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 sidebar">
-                <div class="list-group">
-                    <a href="dasboard.html" class="list-group-item list-group-item-action">
-                        <i class="fas fa-th-large"></i>
-                        Dashboard
-                    </a>
-                    <a href="infoJurusan.html" class="list-group-item list-group-item-action">
-                        <i class="fas fa-book"></i>
-                        Jurusan
-                    </a>
-                    <a href="recent.html" class="list-group-item list-group-item-action active" style="background-color: #ff5722; color: white;">
-                        <i class="fas fa-history"></i>
-                        Berita Terbaru
-                    </a>
-                    <!-- <a href="input_berita.html" class="list-group-item list-group-item-action active" style="background-color: #ff5722; color: white;">
-                        <i class="fas fa-plus-circle"></i>
-                        Input Berita
-                    </a> -->
-                </div>
-            </div>
-            
-            <div class="col-md-10 main-content" id="mainContent">
-                <div class="header-local"> <h1>Berita Terkini Jurusan Kami</h1>
-                    <p>Ikuti perkembangan terbaru seputar kegiatan dan prestasi jurusan kami.</p>
-                </div>
-                
-                <div class="content-container" id="newsContentContainer"> 
-                    <p id="loadingMessage">Memuat berita...</p>
-                </div>
-            </div>
+    <button class="toggle-btn" id="toggleBtn">
+        <i class="fas fa-chevron-left" id="toggleIcon"></i>
+    </button>
+    
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Berita Terkini Jurusan Kami</h1>
+            <p>Ikuti perkembangan terbaru seputar kegiatan dan prestasi jurusan kami.</p>
+        </div>
+        
+        <div class="content-container" id="newsContentContainer"> 
+            <p id="loadingMessage">Memuat berita...</p>
         </div>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // No sidebar toggle logic needed anymore as sidebar is static
+            // Sidebar toggle logic
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const mainContent = document.getElementById('mainContent');
+            
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                
+                if (sidebar.classList.contains('collapsed')) {
+                    toggleIcon.classList.remove('fa-chevron-left');
+                    toggleIcon.classList.add('fa-chevron-right');
+                } else {
+                    toggleIcon.classList.remove('fa-chevron-right');
+                    toggleIcon.classList.add('fa-chevron-left');
+                }
+            });
 
+            function adjustLayout() {
+                if (window.innerWidth <= 576) {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    mainContent.style.marginLeft = '0';
+                    mainContent.style.width = '100%';
+                    toggleBtn.style.display = 'none';
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    mainContent.style.marginLeft = '250px';
+                    mainContent.style.width = 'calc(100% - 250px)';
+                    toggleBtn.style.display = 'flex';
+                    toggleIcon.classList.remove('fa-chevron-right');
+                    toggleIcon.classList.add('fa-chevron-left');
+                }
+            }
+            adjustLayout();
+            window.addEventListener('resize', adjustLayout);
+
+
+            // --- NEW JAVASCRIPT FOR DYNAMIC NEWS LOADING FROM JSON ---
             const newsContentContainer = document.getElementById('newsContentContainer');
 
-            function loadAndRenderNews() {
-                const storedNews = localStorage.getItem('recentNews');
-                let newsData = [];
+            // Function to load news from news.json
+            async function loadAndRenderNews() {
+                try {
+                    const response = await fetch('news.json'); // Fetch the JSON file
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const newsData = await response.json();
 
-                if (storedNews) {
-                    newsData = JSON.parse(storedNews);
-                } else {
-                    // Fallback or initial dummy data if localStorage is empty
-                    newsData = [
-                        { id: '_dummy1', title: "PENS Raih Juara Umum Kompetisi Informatika Nasional Enam Kali Berturut-turut", description: "Politeknik Elektronika Negeri Surabaya (PENS) kembali menorehkan prestasi gemilang dengan meraih juara umum kompetisi Informatika Nasional untuk keenam kalinya secara berturut-turut...", image: "https://via.placeholder.com/600x300?text=PENS+Raih+Juara", link: "#" },
-                        { id: '_dummy2', title: "PENS Siap Dukung Literasi Digital di Kalangan Mahasiswa Surabaya", description: "Direktorat Jenderal Vokasi bersama Politeknik Elektronika Negeri Surabaya (PENS) mendukung penuh peningkatan literasi digital di kalangan mahasiswa Surabaya. Berbagai aktivitas dan informasi di dunia digital semakin meningkat...", image: "https://via.placeholder.com/600x300?text=PENS+Dukung+Literasi", link: "#" },
-                        { id: '_dummy3', title: "Mahasiswa Singapura Belajar Teknologi dan Budaya di PENS Surabaya", description: "Delegasi mahasiswa dari Singapura berkunjung ke Politeknik Elektronika Negeri Surabaya (PENS) untuk mempelajari teknologi terbaru dan mengenal lebih dekat kebudayaan Indonesia...", image: "https://via.placeholder.com/600x300?text=Mahasiswa+Singapura+Belajar", link: "#" },
-                        { id: '_dummy4', title: "Dari Ajang InnoWorks 2023, Inovasi Mahasiswa PENS Siap Wakili Indonesia ke Tingkat ASEAN", description: "Dalam ajang InnoWorks 2023, Politeknik Elektronika Negeri Surabaya (PENS) kembali menunjukkan taringnya. Inovasi-inovasi yang dihasilkan mahasiswa PENS berhasil lolos dan siap mewakili Indonesia ke tingkat ASEAN...", image: "https://via.placeholder.com/600x300?text=Inovasi+Mahasiswa+PENS", link: "#" }
-                    ];
-                    localStorage.setItem('recentNews', JSON.stringify(newsData)); // Save this initial data
+                    newsContentContainer.innerHTML = ''; // Clear loading message/previous content
+
+                    if (newsData.length === 0) {
+                        newsContentContainer.innerHTML = '<p>Tidak ada berita terbaru saat ini.</p>';
+                        return;
+                    }
+
+                    newsData.forEach(news => {
+                        const newsItemDiv = document.createElement('div');
+                        newsItemDiv.className = 'news-item';
+                        newsItemDiv.innerHTML = `
+                            <img src="${news.image}" alt="${news.title}" class="news-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x300?text=No+Image';">
+                            <h3 class="news-item-title">${news.title}</h3>
+                            <p class="news-item-description">${news.description}</p>
+                            <div class="text-end mt-2">
+                                <a href="${news.link}" class="detail-btn">Lihat Detail</a>
+                            </div>
+                        `;
+                        newsContentContainer.appendChild(newsItemDiv);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching news.json:', error);
+                    newsContentContainer.innerHTML = '<p>Gagal memuat berita terbaru. Mohon coba lagi nanti.</p>';
                 }
-
-                newsContentContainer.innerHTML = ''; // Clear loading message/previous content
-
-                if (newsData.length === 0) {
-                    newsContentContainer.innerHTML = '<p>Tidak ada berita terbaru saat ini.</p>';
-                    return;
-                }
-
-                newsData.forEach(news => {
-                    const newsItemDiv = document.createElement('div');
-                    newsItemDiv.className = 'news-item';
-                    newsItemDiv.innerHTML = `
-                        <img src="${news.image}" alt="${news.title}" class="news-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x300?text=No+Image';">
-                        <h3 class="news-item-title">${news.title}</h3>
-                        <p class="news-item-description">${news.description}</p>
-                        <div class="text-end mt-2">
-                            <a href="${news.link}" class="detail-btn">Lihat Detail</a>
-                        </div>
-                    `;
-                    newsContentContainer.appendChild(newsItemDiv);
-                });
             }
 
             // Call this function when the page loads
